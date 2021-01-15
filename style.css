@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.all {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.inputTitle {
+  margin-top: 10rem;
+}
+
+.board {
+  border: 1px solid gray;
+  margin: 0 auto;
+  padding: 50px;
+  width: 500px;
+}
