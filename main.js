@@ -13,27 +13,58 @@ btn.addEventListener("click", (event) => {
 
 board.addEventListener("click", (event) => {
   if (event.target.closest("#dlt")) {
-    arr.splice(event, 1);
-    board.innerHTML = "";
+    deleteCount();
   }
-  draw();
 });
+
+function deleteCount() {
+  const item = event.target.closest("#item_");
+  item.querySelector(".newTitle");
+  item.querySelector(".newDesc");
+  console.log(item);
+  draw();
+
+  arr.forEach(function (item, index) {
+    if (
+      item.inputTitle === item.inputTitle &&
+      item.inputDesc === item.inputDesc
+    ) {
+      arr.splice(index, 1);
+      board.innerHTML = "";
+    }
+  });
+}
 
 function draw() {
   let displayBoard = "";
-  arr.forEach(function (item) {
+  arr.forEach(function (item, index) {
     displayBoard += `
-        <ul >
-        <li>${item.inputTitle}</label>
-        <li>${item.inputDesc}</li>
-        </ul>
+        <div id ="item_">
+        <p class="newTitle">${item.inputTitle}</p>
+        <p class="newDesc">${item.inputDesc}</p>
         <button id=dlt>Delete</button>
         <button id=edit>Edit</button>
+        </div>
+        
         `;
+
     board.innerHTML = displayBoard;
   });
 }
 
+// event.target.closest("#item_");
+// const newTitle = document.querySelector(".newTitle");
+// const newDesc = document.querySelector(".newDesc");
+// draw();
+// arr.forEach(function (item, index) {
+//   if (item.inputTitle === item.newTitle && item.inputDesc === item.newDesc) {
+//     arr.splice(index, 1);
+//     board.innerHTML = "";
+
+//     console.log(newTitle);
+//     console.log(newDesc);
+//   }
+// });
 // function deleteCount() {
 //   const dlt = document.querySelector("#dlt");
 
