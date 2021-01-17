@@ -8,6 +8,7 @@ const arr = [];
 btn.addEventListener("click", (event) => {
   event.preventDefault();
   arr.push({ inputTitle: inputTitle.value, inputDesc: inputDesc.value });
+  console.log(arr);
   draw();
 });
 
@@ -19,20 +20,19 @@ board.addEventListener("click", (event) => {
 
 function deleteCount() {
   const item = event.target.closest("#item_");
-  item.querySelector(".newTitle");
-  item.querySelector(".newDesc");
-  console.log(item);
-  draw();
+  const newTitle = item.querySelector(".newTitle").textContent;
+  const newDesc = item.querySelector(".newDesc").textContent;
 
   arr.forEach(function (item, index) {
-    if (
-      item.inputTitle === item.inputTitle &&
-      item.inputDesc === item.inputDesc
-    ) {
+    if (item.inputTitle === newTitle && item.inputDesc === newDesc) {
       arr.splice(index, 1);
       board.innerHTML = "";
     }
   });
+
+  console.log(arr);
+
+  draw();
 }
 
 function draw() {
@@ -45,9 +45,7 @@ function draw() {
         <button id=dlt>Delete</button>
         <button id=edit>Edit</button>
         </div>
-        
         `;
-
     board.innerHTML = displayBoard;
   });
 }
@@ -103,3 +101,17 @@ function draw() {
 
 //   elem.addEventListener("click", () => alert(`Всплытие: ${elem.tagName}`));
 // }
+
+// console.log("newTitle.textContent:", newTitle.textContent);
+// console.log("inputTitle.value:", inputTitle.value);
+// console.log("newDesc.textContent:", newDesc.textContent);
+// console.log("inputDesc.value", inputDesc.value);
+// console.log("newTitle:", newTitle);
+// console.log("newDesc:", newDesc);
+
+// console.log("newTitle.textContent:", newTitle.textContent);
+// console.log("inputTitle.value:", inputTitle.value);
+// console.log("newDesc.textContent:", newDesc.textContent);
+// console.log("inputDesc.value", inputDesc.value);
+// console.log("newTitle:", newTitle);
+// console.log("newDesc:", newDesc);
