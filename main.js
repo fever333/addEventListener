@@ -8,32 +8,61 @@ const arr = [];
 btn.addEventListener("click", (event) => {
   event.preventDefault();
   arr.push({ inputTitle: inputTitle.value, inputDesc: inputDesc.value });
+  console.log(arr);
   draw();
 });
 
 board.addEventListener("click", (event) => {
   if (event.target.closest("#dlt")) {
-    arr.splice(event, 1);
-    board.innerHTML = "";
+    deleteCount();
   }
-  draw();
 });
+
+function deleteCount() {
+  const item = event.target.closest("#item_");
+  const newTitle = item.querySelector(".newTitle").textContent;
+  const newDesc = item.querySelector(".newDesc").textContent;
+
+  arr.forEach(function (item, index) {
+    if (item.inputTitle === newTitle && item.inputDesc === newDesc) {
+      arr.splice(index, 1);
+      board.innerHTML = "";
+    }
+  });
+
+  console.log(arr);
+
+  draw();
+}
 
 function draw() {
   let displayBoard = "";
-  arr.forEach(function (item) {
+  arr.forEach(function (item, index) {
     displayBoard += `
-        <ul >
-        <li>${item.inputTitle}</label>
-        <li>${item.inputDesc}</li>
-        </ul>
+        <div id ="item_">
+        <p class="newTitle">${item.inputTitle}</p>
+        <p class="newDesc">${item.inputDesc}</p>
         <button id=dlt>Delete</button>
         <button id=edit>Edit</button>
+        </div>
         `;
     board.innerHTML = displayBoard;
   });
 }
 
+// event.target.closest("#item_");
+// const newTitle = document.querySelector(".newTitle");
+// const newDesc = document.querySelector(".newDesc");
+// draw();
+// arr.forEach(function (item, index) {
+//   if (item.inputTitle === item.newTitle && item.inputDesc === item.newDesc) {
+//     arr.splice(index, 1);
+//     board.innerHTML = "";
+
+//     console.log(newTitle);
+//     console.log(newDesc);
+//   }
+// });
 // function deleteCount() {
 //   const dlt = document.querySelector("#dlt");
 
@@ -72,3 +101,17 @@ function draw() {
 
 //   elem.addEventListener("click", () => alert(`Всплытие: ${elem.tagName}`));
 // }
+
+// console.log("newTitle.textContent:", newTitle.textContent);
+// console.log("inputTitle.value:", inputTitle.value);
+// console.log("newDesc.textContent:", newDesc.textContent);
+// console.log("inputDesc.value", inputDesc.value);
+// console.log("newTitle:", newTitle);
+// console.log("newDesc:", newDesc);
+
+// console.log("newTitle.textContent:", newTitle.textContent);
+// console.log("inputTitle.value:", inputTitle.value);
+// console.log("newDesc.textContent:", newDesc.textContent);
+// console.log("inputDesc.value", inputDesc.value);
+// console.log("newTitle:", newTitle);
+// console.log("newDesc:", newDesc);
