@@ -3,37 +3,89 @@ const board = document.querySelector(".board");
 const inputTitle = document.querySelector(".inputTitle");
 const inputDesc = document.querySelector(".inputDesc");
 
+const editTitle = document.querySelector(".editTitle");
+const editDesc = document.querySelector(".editDesc");
+
+const modal = document.querySelector(".modal");
+const modalWrapper = document.querySelector(".modal__wrapper");
+const modalContent = document.querySelector(".modal__content");
+const closeBtn = document.querySelector("#closeBtn");
+
+let counter = 0;
+
 const arr = [];
 
 btn.addEventListener("click", (event) => {
   event.preventDefault();
-  arr.push({ inputTitle: inputTitle.value, inputDesc: inputDesc.value });
+
+  arr.push({
+    inputTitle: inputTitle.value,
+    inputDesc: inputDesc.value,
+    id: counter,
+  });
+  counter++;
+
   draw();
+});
+
+closeBtn.addEventListener("click", () => {
+  modal.style.display = "none";
 });
 
 board.addEventListener("click", (event) => {
   if (event.target.closest("#dlt")) {
-    arr.splice(event, 1);
-    board.innerHTML = "";
+    deleteCount(event);
   }
-  draw();
+  if (event.target.closest("#edit")) {
+    modal.style.display = "block";
+    editCount(event);
+  }
 });
+
+function editCount(event) {}
+
+function deleteCount(event) {
+  const item = event.target.closest("#item_");
+  const id = item.querySelector(".id").textContent;
+
+  arr.forEach(function (record, index) {
+    if (+record.id === +id) {
+      arr.splice(index, 1);
+      board.innerHTML = "";
+    }
+  });
+
+  draw();
+}
 
 function draw() {
   let displayBoard = "";
   arr.forEach(function (item) {
     displayBoard += `
-        <ul >
-        <li>${item.inputTitle}</label>
-        <li>${item.inputDesc}</li>
-        </ul>
-        <button id=dlt>Delete</button>
-        <button id=edit>Edit</button>
+        <div id ="item_">
+        <p class="newTitle">${item.inputTitle}</p>
+        <p class="newDesc">${item.inputDesc}</p>
+        <p class="id" style="display: none">${item.id}</p>
+        <button id="dlt">Delete</button>
+        <button id="edit">Edit</button>
+        </div>
         `;
     board.innerHTML = displayBoard;
   });
 }
+// event.target.closest("#item_");
+// const newTitle = document.querySelector(".newTitle");
+// const newDesc = document.querySelector(".newDesc");
+// draw();
+// arr.forEach(function (item, index) {
+//   if (item.inputTitle === item.newTitle && item.inputDesc === item.newDesc) {
+//     arr.splice(index, 1);
+//     board.innerHTML = "";
 
+//     console.log(newTitle);
+//     console.log(newDesc);
+//   }
+// });
 // function deleteCount() {
 //   const dlt = document.querySelector("#dlt");
 
@@ -72,3 +124,24 @@ function draw() {
 
 //   elem.addEventListener("click", () => alert(`Всплытие: ${elem.tagName}`));
 // }
+
+// console.log("newTitle.textContent:", newTitle.textContent);
+// console.log("inputTitle.value:", inputTitle.value);
+// console.log("newDesc.textContent:", newDesc.textContent);
+// console.log("inputDesc.value", inputDesc.value);
+// console.log("newTitle:", newTitle);
+// console.log("newDesc:", newDesc);
+
+// console.log("newTitle.textContent:", newTitle.textContent);
+// console.log("inputTitle.value:", inputTitle.value);
+// console.log("newDesc.textContent:", newDesc.textContent);
+// console.log("inputDesc.value", inputDesc.value);
+// console.log("newTitle:", newTitle);
+// console.log("newDesc:", newDesc);
+
+// const item = { a: "a1", b: "b2", c: "c3" };
+
+// const { a, b, c } = item;
+// console.log(a);
+// console.log(b);
+// console.log(c);
