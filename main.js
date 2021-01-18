@@ -3,53 +3,76 @@ const board = document.querySelector(".board");
 const inputTitle = document.querySelector(".inputTitle");
 const inputDesc = document.querySelector(".inputDesc");
 
+const editTitle = document.querySelector(".editTitle");
+const editDesc = document.querySelector(".editDesc");
+
+const modal = document.querySelector(".modal");
+const modalWrapper = document.querySelector(".modal__wrapper");
+const modalContent = document.querySelector(".modal__content");
+const closeBtn = document.querySelector("#closeBtn");
+
+let counter = 0;
+
 const arr = [];
 
 btn.addEventListener("click", (event) => {
   event.preventDefault();
-  arr.push({ inputTitle: inputTitle.value, inputDesc: inputDesc.value });
-  console.log(arr);
+
+  arr.push({
+    inputTitle: inputTitle.value,
+    inputDesc: inputDesc.value,
+    id: counter,
+  });
+  counter++;
+
   draw();
+});
+
+closeBtn.addEventListener("click", () => {
+  modal.style.display = "none";
 });
 
 board.addEventListener("click", (event) => {
   if (event.target.closest("#dlt")) {
-    deleteCount();
+    deleteCount(event);
+  }
+  if (event.target.closest("#edit")) {
+    modal.style.display = "block";
+    editCount(event);
   }
 });
 
-function deleteCount() {
-  const item = event.target.closest("#item_");
-  const newTitle = item.querySelector(".newTitle").textContent;
-  const newDesc = item.querySelector(".newDesc").textContent;
+function editCount(event) {}
 
-  arr.forEach(function (item, index) {
-    if (item.inputTitle === newTitle && item.inputDesc === newDesc) {
+function deleteCount(event) {
+  const item = event.target.closest("#item_");
+  const id = item.querySelector(".id").textContent;
+
+  arr.forEach(function (record, index) {
+    if (+record.id === +id) {
       arr.splice(index, 1);
       board.innerHTML = "";
     }
   });
-
-  console.log(arr);
 
   draw();
 }
 
 function draw() {
   let displayBoard = "";
-  arr.forEach(function (item, index) {
+  arr.forEach(function (item) {
     displayBoard += `
         <div id ="item_">
         <p class="newTitle">${item.inputTitle}</p>
         <p class="newDesc">${item.inputDesc}</p>
-        <button id=dlt>Delete</button>
-        <button id=edit>Edit</button>
+        <p class="id" style="display: none">${item.id}</p>
+        <button id="dlt">Delete</button>
+        <button id="edit">Edit</button>
         </div>
         `;
     board.innerHTML = displayBoard;
   });
 }
-
 // event.target.closest("#item_");
 // const newTitle = document.querySelector(".newTitle");
 // const newDesc = document.querySelector(".newDesc");
@@ -115,3 +138,10 @@ function draw() {
 // console.log("inputDesc.value", inputDesc.value);
 // console.log("newTitle:", newTitle);
 // console.log("newDesc:", newDesc);
+
+// const item = { a: "a1", b: "b2", c: "c3" };
+
+// const { a, b, c } = item;
+// console.log(a);
+// console.log(b);
+// console.log(c);
