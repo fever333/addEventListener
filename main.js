@@ -1,29 +1,32 @@
+// let a = { a: 1, b: 2, c: 3 };
+
+// let b = { 1: "a", 2: "b", 3: "b" };
+// let arr = [a];
+// console.log(a);
+// console.log(b);
+// console.log(arr);
+
+// arr.splice(0, 1, b);
+// console.log(arr);
 const btn = document.querySelector(".btn");
 const board = document.querySelector(".board");
 const inputTitle = document.querySelector(".inputTitle");
 const inputDesc = document.querySelector(".inputDesc");
 
-const editTitle = document.querySelector(".editTitle");
-const editDesc = document.querySelector(".editDesc");
-
 const modal = document.querySelector(".modal");
 const modalWrapper = document.querySelector(".modal__wrapper");
 const modalContent = document.querySelector(".modal__content");
-const closeBtn = document.querySelector("#closeBtn");
 
-let counter = 0;
+const save = document.querySelector(".save");
+
+const closeBtn = document.querySelector("#closeBtn");
 
 const arr = [];
 
 btn.addEventListener("click", (event) => {
   event.preventDefault();
 
-  arr.push({
-    inputTitle: inputTitle.value,
-    inputDesc: inputDesc.value,
-    id: counter,
-  });
-  counter++;
+  arr.push({ inputTitle: inputTitle.value, inputDesc: inputDesc.value });
 
   draw();
 });
@@ -42,19 +45,48 @@ board.addEventListener("click", (event) => {
   }
 });
 
-function editCount(event) {}
+save.addEventListener("click", (event) => {
+  modal.style.display = "none";
+  editCount(event);
+});
+
+function editCount(event) {
+  const edit = event.target.closest("body");
+  const newTitle = edit.querySelector(".newTitle").textContent;
+  const newDesc = edit.querySelector(".newDesc").textContent;
+
+  const editTitle = document.querySelector(".editTitle");
+  const editDesc = document.querySelector(".editDesc");
+
+  editTitle.value = newTitle;
+  editDesc.value = newDesc;
+
+  arr.forEach(function (edit, index) {
+    if (edit.inputTitle === newTitle && edit.inputDesc === newDesc) {
+      arr.splice(index, 1, {
+        inputTitle: editTitle.value,
+        inputDesc: editDesc.value,
+      });
+
+      console.log(arr);
+      console.log(editTitle.value);
+      console.log(newTitle);
+    }
+  });
+  draw();
+}
 
 function deleteCount(event) {
   const item = event.target.closest("#item_");
-  const id = item.querySelector(".id").textContent;
+  const newTitle = item.querySelector(".newTitle").textContent;
+  const newDesc = item.querySelector(".newDesc").textContent;
 
   arr.forEach(function (record, index) {
-    if (+record.id === +id) {
+    if (record.inputTitle === newTitle && record.inputDesc === newDesc) {
       arr.splice(index, 1);
       board.innerHTML = "";
     }
   });
-
   draw();
 }
 
@@ -65,11 +97,11 @@ function draw() {
         <div id ="item_">
         <p class="newTitle">${item.inputTitle}</p>
         <p class="newDesc">${item.inputDesc}</p>
-        <p class="id" style="display: none">${item.id}</p>
         <button id="dlt">Delete</button>
         <button id="edit">Edit</button>
         </div>
         `;
+
     board.innerHTML = displayBoard;
   });
 }
@@ -145,3 +177,12 @@ function draw() {
 // console.log(a);
 // console.log(b);
 // console.log(c);
+
+// const item = modalContent.closest(".modal__content");
+//   const id = item.querySelector("#id").textContent;
+//   arr.forEach(function (edit, index) {
+//     if (+edit.id === +id.value) {
+//       arr.splice(index, 1);
+//       board.innerHTML = "";
+//     }
+//   });
