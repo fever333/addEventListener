@@ -8,11 +8,33 @@
   </head>
   <body>
     <form class="all">
-      <input class="inputTitle" type="text" placeholder="Title:" />
-      <input class="inputDesc" type="text" placeholder="Description:" />
+      <input
+        name="inputTitle"
+        class="inputTitle"
+        type="text"
+        placeholder="Title:"
+      />
+      <input
+        name="inputDesc"
+        class="inputDesc"
+        type="text"
+        placeholder="Description:"
+      />
 
       <button class="btn">Submit</button>
     </form>
+    <div class="modal">
+      <div class="modal__wrapper">
+        <button id="closeBtn">X</button>
+
+        <div class="modal__content">
+          <input type="text" class="editTitle" />
+          <input type="text" class="editDesc" />
+
+          <button class="save">Save</button>
+        </div>
+      </div>
+    </div>
     <div class="board"></div>
 
     <script src="main.js"></script>
